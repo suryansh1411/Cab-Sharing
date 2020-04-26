@@ -1,0 +1,49 @@
+{% extends 'bookings/bookings_base.html' %}
+
+{% block title %}
+HomePage
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<br><br><br>
+<div class="container">
+  <div class="row">
+    <div class="card-deck">
+      <!-- <div class="col-md-4"> -->
+      {% for booking in bookings_list %}
+
+        <div class="col-md-4">
+          <div class="card text-white border-secondary mx-auto mb-5 " style='background-color:rgb(145, 0, 61)'>
+            <div class="card-body">
+              <div class="card-title text-center">
+
+              </div>
+              <div class="card-text">
+                <h6>From : {{booking.start_position}}</h6>
+                <h6>To : {{booking.destination}}</h6>
+                <h6>Cab Timing : {{booking.cab_timing}}</h6>
+                <h6>Max. no. of Members : {{booking.max_members}}</h6>
+                <h6>Group-Admin : {{booking.creator}}</h6>
+                <br>
+
+                <a href="{% url 'bookings:bookings_update' pk=booking.pk %}" class='btn btn-warning btn-sm '>Edit</a>
+                <a href="{% url 'bookings:bookings_delete' pk=booking.pk %}" class='btn btn-secondary btn-sm '>Delete</a>
+
+              
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- </div> -->
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

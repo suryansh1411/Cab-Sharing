@@ -1,9 +1,9 @@
-{% extends 'accounts/base_accounts.html' %}
+{% extends 'bookings/bookings_base.html' %}
 {% load crispy_forms_tags %}
-
 {% block title %}
-Change Password
+New Booking
 {% endblock %}
+
 
 
 {% block content %}
@@ -13,7 +13,7 @@ Change Password
     <div class="card-header text-center">
       <button type="button" class="close modal-close ml-auto" data-dismiss="modal" aria-label="Close"><a href="{% url 'index' %}"><span aria-hidden="true">×</span></a></button>
 
-      <h1>Password Change</h1>
+      <h1>Edit Booking</h1>
     </div>
     <div class="card-body">
       <div class="container">
@@ -29,6 +29,7 @@ Change Password
           <div class="text-center">
             <button type="submit" class="btn btn-primary btn-lg">Save</button>
           </div>
+          <br>
         </form>
       </div>
     </div>

@@ -16,12 +16,14 @@
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand"  style="font-family:'Monoton', cursive; font-size:1.2em;" href="{% url 'index' %}">CAB SHARING</a>
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" style="font-family:'Monoton', cursive; font-size:1.2em;" href="{% url 'index' %}">CAB SHARING</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-  
+    <ul class='navbar-nav mx-auto'>
+      <li><a href="{% url 'bookings:bookings_create' %}">Create</a></li>
+    </ul>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         {% if user.is_authenticated %}

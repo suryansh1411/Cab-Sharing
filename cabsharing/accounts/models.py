@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
 HOSTELS=[
@@ -17,6 +18,7 @@ HOSTELS=[
         ('Disang/Dibang', 'Disang/Dibang'),
 ]
 
+
 class UserProfile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     hostel=models.CharField(blank=False, max_length=50 ,choices=HOSTELS)
@@ -25,3 +27,6 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    # def get_absolute_url(self):
+    #     return reverse('accounts:user_detail' , kwargs={'pk':self.pk})
