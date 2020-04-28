@@ -1,10 +1,64 @@
 {% extends 'bookings/bookings_base.html' %}
 
 {% block title %}
-
+Group Info
 {% endblock %}
 
 
 
 {% block content %}
+
+<br><br>
+<div class="container">
+
+  <div class="card text-white border-secondary mx-auto mb-5 " style='background-color:rgb(145, 0, 61); width:30rem'>
+    <div class="card-body">
+      <div class="card-title text-center mx-auto">
+
+      </div>
+      <div class="card-text">
+        <h4>From : {{booking.start_position}}</h4>
+        <h4>To : {{booking.destination}}</h4>
+        <h4>Date : {{booking.date}}</h4>
+        <h4>Time : {{booking.time}}</h4>
+        <h4>Group-Admin : {{booking.creator}}</h4>
+        <h4>No. of Members : {{booking.members.count|add:"1"}}<small> /{{booking.max_members}}</small></h4>
+        <h4>Max no. of Members : {{booking.max_members}}</h4>
+        <br>
+        <div class="card-link">
+          {% if user.username == booking.creator %}
+          <a href="{% url 'bookings:bookings_update' pk=booking.pk %}" class='btn btn-warning btn-lg '>Edit</a>
+          {% endif %}
+          {% if user.username == booking.creator %}
+          <a href="{% url 'bookings:bookings_delete' pk=booking.pk %}" class='btn btn-secondary btn-lg '>Delete</a>
+          {% endif %}
+          {% if booking.members.count|add:"1" < booking.max_members %}
+          <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-lg">Join</a>
+          {% else %}
+          <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-lg disabled">Join</a>
+          {% endif %}
+          <a href="{% url 'bookings:group_leave' pk=booking.pk %}" class='btn btn-info btn-lg'>Leave</a>
+          <a href="{% url 'bookings:chat_list' pk=booking.pk %}" class='btn btn-success btn-lg'>Chat</a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+
+    <h3>Group Admin: {{booking.creator}}</h3>
+    <br>
+    <h3>Other Group Members:</h3>
+      {% for member in booking.members.all %}
+      <h3>{{member.name}}</h3>
+      {% endfor %}
+
+  </div>
+
+
+
+</div>
+
+
 {% endblock %}

@@ -2,6 +2,21 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import UserProfile
 
+HOSTELS=[
+        ('Brahmaputra', 'Brahmaputra'),
+        ('Dihing', 'Dihing'),
+        ('Manas', 'Manas'),
+        ('Lohit', 'Lohit'),
+        ('Dhansiri', 'Dhansiri'),
+        ('Kapili', 'Kapili'),
+        ('Siang', 'Siang'),
+        ('Kameng', 'Siang'),
+        ('Umiam', 'Umiam'),
+        ('Barak', 'Barak'),
+        ('Subhansiri', 'Subhansiri'),
+        ('Disang/Dibang', 'Disang/Dibang'),
+]
+
 
 def emailcheck(value):
     if(value[-11::]!='@iitg.ac.in'):
@@ -21,7 +36,8 @@ class UserForm(forms.ModelForm):
 
 class UserProfileForm(forms.ModelForm):
 
-    hostel=forms.CharField(required=True, widget=forms.TextInput(attrs={'placeholder':'Hostel'}))
+    hostel=forms.ChoiceField(required=True, choices=HOSTELS)
+    
     class Meta():
         model=UserProfile
         fields=('hostel', 'profile_pic')

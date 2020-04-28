@@ -22,7 +22,8 @@ HOSTELS=[
 class UserProfile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     hostel=models.CharField(blank=False, max_length=50 ,choices=HOSTELS)
-    profile_pic=models.ImageField(blank=True, upload_to='profile_pics')
+    profile_pic=models.ImageField(blank=True, upload_to='profile_pics', default='default.jpg')
+    # add any gender-neutral photo in default
 
 
     def __str__(self):

@@ -1,6 +1,9 @@
 from django.urls import path, re_path
 from . import views
 from django.contrib.auth import views as auth_views
+from django.conf.urls.static import static
+from django.conf import settings
+
 
 app_name='accounts'
 
@@ -23,7 +26,7 @@ urlpatterns=[
     # re_path(r'^(?P<pk>\d+)/delete/$', views.UserDeleteView.as_view(template_name='accounts/user_delete.html'), name='user_delete'),
 
     re_path(r'^(?P<pk>\d+)/update/$', views.UserUpdateView.as_view(template_name='accounts/user_update.html'), name='user_update'),
-    
+
 
     # re_path(r'^reset/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$', auth_views.password_reset_confirm, name='password_reset_confirm'),
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

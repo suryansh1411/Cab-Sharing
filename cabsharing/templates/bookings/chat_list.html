@@ -1,0 +1,14 @@
+{% extends 'bookings/bookings_base.html' %}
+
+
+{% block title%}
+Chat Room
+{% endblock %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <p>Click here to </p><a class="navbar-brand mx-auto" href="{% url 'bookings:message' pk=booking.pk %}">Message</a>
+
+
+</nav>
+{% endblock %}
