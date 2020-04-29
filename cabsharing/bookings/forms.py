@@ -1,5 +1,5 @@
 from django import forms
-from bookings.models import Booking, Member
+from bookings.models import Booking, Member, Chat
 
 
 class BookingForm(forms.ModelForm):
@@ -21,3 +21,10 @@ class MemberForm(forms.ModelForm):
     class Meta():
         model=Member
         fields=[]
+
+
+class MessageForm(forms.ModelForm):
+    message=forms.CharField(widget=forms.Textarea())
+    class Meta():
+        model=Chat
+        fields=['message']

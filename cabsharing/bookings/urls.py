@@ -2,7 +2,6 @@ from django.urls import path, re_path, include
 from bookings import views
 from django.conf.urls.static import static
 from django.conf import settings
-from chats import views as chat_views
 
 app_name='bookings'
 
@@ -13,7 +12,6 @@ urlpatterns=[
     re_path(r'^(?P<pk>\d+)/join/$', views.join_group , name='group_join'),
     re_path(r'^(?P<pk>\d+)/leave/$', views.leave_group , name='group_leave'),
     re_path(r'^(?P<pk>\d+)/info/$', views.GroupInfo.as_view(template_name='bookings/bookings_detail.html'), name='group_info'),
-    # re_path(r'^(?P<pk>\d+)/chat/$', include('chats.urls', namespace='chats'), name='chats'),
-    re_path(r'^(?P<pk>\d+)/chat/$', chat_views.PostListView.as_view(template_name='bookings/chat_list.html'), name='chat_list'),
-    re_path(r'^(?P<pk>\d+)/post/$', chat_views.PostCreateView.as_view(template_name='bookings/chat_form.html'), name='message'),
+    re_path(r'^(?P<pk>\d+)/chats/$', views.MessageDisplayView.as_view(template_name='bookings/chats_list.html'), name='chats_display'),
+    re_path(r'^(?P<pk>\d+)/chats/create/$', views.message_create, name='chats_create'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

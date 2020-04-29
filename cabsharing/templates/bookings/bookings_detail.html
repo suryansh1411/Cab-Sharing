@@ -1,5 +1,4 @@
 {% extends 'bookings/bookings_base.html' %}
-
 {% block title %}
 Group Info
 {% endblock %}
@@ -38,7 +37,7 @@ Group Info
           <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-lg disabled">Join</a>
           {% endif %}
           <a href="{% url 'bookings:group_leave' pk=booking.pk %}" class='btn btn-info btn-lg'>Leave</a>
-          <a href="{% url 'bookings:chat_list' pk=booking.pk %}" class='btn btn-success btn-lg'>Chat</a>
+
 
         </div>
       </div>

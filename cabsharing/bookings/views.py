@@ -1,11 +1,11 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import CreateView , ListView, UpdateView , DeleteView, DetailView
-from bookings.models import Booking, Member
-from bookings.forms import BookingForm, MemberForm
+from bookings.models import Booking, Member, Chat
+from bookings.forms import BookingForm, MemberForm, MessageForm
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-
+from accounts.models import UserProfile
 # Create your views here.
 
 
@@ -83,3 +83,25 @@ def leave_group(request, pk):
     else:
         form=MemberForm(request.POST)
     return render(request, 'bookings/leaving_form.html', {'form':form})
+
+###########################################################################################
+###########################################################################################
+
+def message_create(request, pk):
+    booking=get_object_or_404(Booking, pk=pk)
+    if request.method=='POST':
+        form=MessageForm(request.POST)
+        if form.is_valid():
+            chat=form.save(commit=False)
+            chat.booking=booking
+            chat.name=request.user.username
+            chat.photo=request.user.userprofile.profile_pic
+            chat.save()
+        return redirect('bookings:chats_display', pk=booking.pk)
+    else:
+        form=MessageForm()
+    return render(request, 'bookings/chats_form.html', {'form':form})
+
+class MessageDisplayView(LoginRequiredMixin, DetailView):
+    model=Booking
+    context_object_name='booking'
