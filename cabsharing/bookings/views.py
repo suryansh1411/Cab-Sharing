@@ -55,6 +55,21 @@ def join_group(request, pk):
             if (request.user.username==booking.creator):
                 return redirect('index')
 
+            if(booking.gender=='boys only'):
+                if(request.user.userprofile.hostel=='Subhansiri' or request.user.userprofile.hostel=='Dhansiri'):
+                    return redirect('index')
+
+            if(booking.gender=='girls only'):
+                if(request.user.userprofile.hostel=='Subhansiri' or request.user.userprofile.hostel=='Dhansiri'):
+                    member=form.save(commit=False)
+                    member.booking=booking
+                    member.name=request.user.username
+                    member.save()
+                    return redirect('index')
+                else:
+                    return redirect('index')
+
+
             member=form.save(commit=False)
             member.booking=booking
             member.name=request.user.username

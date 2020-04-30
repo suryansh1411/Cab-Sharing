@@ -5,9 +5,9 @@ from django.utils import timezone
 # Create your models here.
 
 GENDER=[
-    ('both','all'),
-    ('girls','only girls'),
-    ('boys', 'only boys')
+    ('both boys and girls','both boys and girls'),
+    ('girls only','girls only'),
+    ('boys only', 'boys only')
 ]
 
 
@@ -19,7 +19,7 @@ class Booking(models.Model):
     destination=models.CharField(max_length=30, blank=False)
     max_members=models.PositiveIntegerField(default=4, blank=False, help_text='maximum number of members includes you as well.')
     gender=models.CharField(default='both', max_length=20, choices=GENDER)
-    
+
 
     def get_absolute_url(self):
         return redirect('index')

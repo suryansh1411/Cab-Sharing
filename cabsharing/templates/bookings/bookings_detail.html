@@ -23,6 +23,7 @@ Group Info
         <h4>Group-Admin : {{booking.creator}}</h4>
         <h4>No. of Members : {{booking.members.count|add:"1"}}<small> /{{booking.max_members}}</small></h4>
         <h4>Max no. of Members : {{booking.max_members}}</h4>
+        <h4>Group open to: {{booking.gender}}</h4>
         <br>
         <div class="card-link">
           {% if user.username == booking.creator %}
