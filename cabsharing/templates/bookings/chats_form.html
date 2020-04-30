@@ -7,6 +7,47 @@ Message
 {% endblock %}
 
 {% block content %}
+<nav class="navbar sticky-top  navbar-light bg-light">
+  <button type="button" class="close modal-close ml-auto" data-dismiss="modal" aria-label="Close"><a href="{% url 'index' %}"><span aria-hidden="true">×</span></a></button>
+
+</nav>
+
+{% for chat in booking.chats.all %}
+{% if user.username == chat.name %}
+<div class="container position-relative:left">
+  <div class="alert alert-success alert-dismissible fade show" style='width:20em;  padding-left:0.5em;' role="alert">
+    <div class="media">
+
+
+      <a href="{% url 'accounts:user_detail' pk=chat.user.pk %}"><img src="{{chat.photo.url}}" height="50em" width='50em' alt='no image' class='mr-3'></a>
+      <div class="media-body">
+        <h6><a href="{% url 'accounts:user_detail' pk=chat.user.pk %}">{{chat.name}}</a></h6>
+        {{chat.message}}
+        <footer><small>{{chat.time}}</small></footer>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="container">
+  <div class="alert alert-primary alert-dismissible fade show" style='width:20em;  padding-left:0.5em; ' role="alert">
+    <div class="media">
+      <a href="{% url 'accounts:user_detail' pk=chat.user.pk %}"><img src="{{chat.photo.url}}" height="50em" width='50em' alt='no image' class='mr-3'></a>
+
+      <div class="media-body">
+        <h6><a href="{% url 'accounts:user_detail' pk=chat.user.pk %}">{{chat.name}}</a></h6>
+        {{chat.message}}
+        <footer><small>{{chat.time}}</small></footer>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+{% endfor %}
+
+<!--
 <br><br><br>
 <div class="container">
   <div class="card">
@@ -33,5 +74,17 @@ Message
       </div>
     </div>
   </div>
-</div>
+</div> -->
+
+<nav class="navbar fixed-bottom navbar-light bg-light">
+  <form class="form-inline mx-auto" method='POST'>
+    {% csrf_token %}
+    <div class="form-group ">
+      {% for field in form %}
+      {{field|as_crispy_field}}
+      {% endfor %}
+    </div>
+    <input type="submit" class='btn btn-primary my-2 my-sm-0 ml-3' value="Post">
+  </form>
+</nav>
 {% endblock %}

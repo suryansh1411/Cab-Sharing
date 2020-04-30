@@ -47,11 +47,12 @@ Group Info
 
   <div class="text-center">
 
-    <h3>Group Admin: {{booking.creator}}</h3>
+    <h3>Group Admin: <a href="{% url 'accounts:user_detail' pk=booking.user.pk %}">{{booking.creator}}</a></h3>
     <br>
     <h3>Other Group Members:</h3>
       {% for member in booking.members.all %}
-      <h3>{{member.name}}</h3>
+      <h3><a href="{% url 'accounts:user_detail' pk=member.user.pk %}">{{member.name}}</a></h3>
+
       {% endfor %}
 
   </div>

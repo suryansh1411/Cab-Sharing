@@ -31,7 +31,7 @@ class MemberForm(forms.ModelForm):
 
 
 class MessageForm(forms.ModelForm):
-    message=forms.CharField(widget=forms.Textarea())
+    message=forms.CharField(label='',widget=forms.TextInput(attrs={'placeholder':'Type a message'}))
     class Meta():
         model=Chat
         fields=['message']

@@ -2,6 +2,8 @@ from django.db import models
 from django.shortcuts import redirect
 from django.urls import reverse
 from django.utils import timezone
+from django.contrib.auth.models import User
+
 # Create your models here.
 
 GENDER=[
@@ -12,6 +14,7 @@ GENDER=[
 
 
 class Booking(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE, related_name='users', null=True)
     creator=models.CharField(max_length=30, blank=False)
     time=models.TimeField( blank=False, auto_now=False, auto_now_add=False ,default='00:00 AM')
     date=models.DateField(blank=False, auto_now=False, auto_now_add=False ,default='2019-6-14')
@@ -36,6 +39,7 @@ class Booking(models.Model):
 
 
 class Member(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE, related_name='member_users', null=True)
     booking=models.ForeignKey('Booking', on_delete=models.CASCADE , related_name='members')
     name=models.CharField(max_length=90)
     approved=models.BooleanField(default=False)
@@ -52,6 +56,7 @@ class Member(models.Model):
 
 
 class Chat(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE, related_name='chat_users', null=True)
     booking=models.ForeignKey('Booking', on_delete=models.CASCADE , related_name='chats', null=True)
     name=models.CharField(max_length=90, null=True)
     message=models.CharField(max_length=500, null=True)
