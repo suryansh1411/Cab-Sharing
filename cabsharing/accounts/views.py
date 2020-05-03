@@ -1,7 +1,7 @@
 from django.shortcuts import render , redirect
 from django.contrib.auth import login, authenticate
 from .forms import UserProfileForm, UserForm
-from django.views.generic import DetailView, DeleteView, UpdateView 
+from django.views.generic import DetailView, DeleteView, UpdateView
 from django.contrib.auth.models import User
 from accounts.models import UserProfile
 from django.urls import reverse, reverse_lazy

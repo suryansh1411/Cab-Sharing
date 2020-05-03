@@ -16,11 +16,11 @@ class BookingForm(forms.ModelForm):
     time=forms.TimeField(label='Time:',required=True, widget=forms.TimeInput())
     max_members=forms.IntegerField(label='Maximum number of members:', help_text='maximum number of members includes you as well.', required=True)
     gender=forms.ChoiceField(label='Group open to:', choices=GENDER )
-
+    description=forms.CharField(label='Description:', required=False)
 
     class Meta():
         model=Booking
-        fields=['start_position' ,'destination','date','time', 'max_members','gender']
+        fields=['start_position' ,'destination','date','time', 'max_members','gender', 'description']
 
 
 class MemberForm(forms.ModelForm):

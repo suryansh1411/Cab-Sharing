@@ -22,7 +22,7 @@ class Booking(models.Model):
     destination=models.CharField(max_length=30, blank=False)
     max_members=models.PositiveIntegerField(default=4, blank=False, help_text='maximum number of members includes you as well.')
     gender=models.CharField(default='both', max_length=20, choices=GENDER)
-
+    description=models.CharField(blank=True, null=True, max_length=100)
 
     def get_absolute_url(self):
         return redirect('index')
@@ -31,7 +31,8 @@ class Booking(models.Model):
     def approved_members(self):
         return self.bookings.filter(approved=True)
 
-
+    class Meta():
+        ordering = ['date', 'time']
     #
     # def set_admin(self):
     #     self.creator={{user.username}}
@@ -45,13 +46,9 @@ class Member(models.Model):
     approved=models.BooleanField(default=False)
 
 
-    def member_approval(self):
-        self.approved=True
-        self.save()
-
+    
     def get_absolute_url(self):
         return reverse('index')
-
 
 
 

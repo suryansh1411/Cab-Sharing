@@ -24,6 +24,7 @@ Group Info
         <h4>No. of Members : {{booking.members.count|add:"1"}}<small> /{{booking.max_members}}</small></h4>
         <h4>Max no. of Members : {{booking.max_members}}</h4>
         <h4>Group open to: {{booking.gender}}</h4>
+
         <br>
         <div class="card-link">
           {% if user.username == booking.creator %}
@@ -32,12 +33,18 @@ Group Info
           {% if user.username == booking.creator %}
           <a href="{% url 'bookings:bookings_delete' pk=booking.pk %}" class='btn btn-secondary btn-lg '>Delete</a>
           {% endif %}
-          {% if booking.members.count|add:"1" < booking.max_members %}
-          <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-lg">Join</a>
-          {% else %}
-          <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-lg disabled">Join</a>
-          {% endif %}
+
+          {% if user in booking.members.all %}
           <a href="{% url 'bookings:group_leave' pk=booking.pk %}" class='btn btn-info btn-lg'>Leave</a>
+
+          {% else %}
+              {% if booking.members.count|add:"1" < booking.max_members %}
+              <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-lg">Join</a>
+              {% else %}
+              <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-lg disabled">Join</a>
+              {% endif %}
+          {% endif %}
+
 
 
         </div>
@@ -46,7 +53,8 @@ Group Info
   </div>
 
   <div class="text-center">
-
+    <h6>Description: {{booking.description}}</h6>
+<br>
     <h3>Group Admin: <a href="{% url 'accounts:user_detail' pk=booking.user.pk %}">{{booking.creator}}</a></h3>
     <br>
     <h3>Other Group Members:</h3>

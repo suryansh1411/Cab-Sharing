@@ -7,10 +7,11 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from accounts.models import UserProfile
 from django.contrib.auth.models import User
-
+from django.contrib.auth import get_user_model
+from django.http import Http404
 # Create your views here.
 
-
+User=get_user_model()
 # class BookingCreateView(LoginRequiredMixin, CreateView):
 #     model=Booking
 #     form_class=BookingForm
@@ -26,6 +27,15 @@ def create_booking(request):
         form=BookingForm(request.POST)
         if form.is_valid():
             booking=form.save(commit=False)
+
+            if(booking.gender=='boys only'):
+                if(request.user.userprofile.hostel=='Subhansiri' or request.user.userprofile.hostel=='Dhansiri'):
+                    return redirect('index')
+
+            if(booking.gender=='girls only'):
+                if(not(request.user.userprofile.hostel=='Subhansiri' or request.user.userprofile.hostel=='Dhansiri')):
+                    return redirect('index')
+
             booking.user=request.user
             booking.creator=request.user.username
             booking.save()
@@ -49,6 +59,9 @@ class BookingDeleteView(LoginRequiredMixin, DeleteView):
 class BookingListView( ListView):
     model=Booking
     context_object_name='bookings_list'
+    # def get_queryset(self):
+    #     booking= Booking.objects.order_by('date')
+    #     return booking.order_by('time')
 
 class GroupInfo(DetailView):
     model=Booking
@@ -136,3 +149,7 @@ def message_create(request, pk):
         form=MessageForm()
     return render(request, 'bookings/chats_form.html', {'form':form,
                                                         'booking':booking})
+
+
+
+# def mybookings(request,pk):

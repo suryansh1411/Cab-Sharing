@@ -1,36 +1,32 @@
 {% extends 'bookings/bookings_base.html' %}
 
 {% block title %}
-HomePage
+My Bookings
 {% endblock %}
 
-
-
 {% block content %}
-<img src="C:\Users\hp\Desktop\Django\Cab Sharing\cabsharing\static\iit-guwahati.jpg" alt="">
-
 <br><br><br>
+
 <div class="col-md-4">
 
 </div>
-<div class="col-md-9">
-
+<div class="col-md-10">
   <div class="container">
     <div class="row">
       <div class="card-group " >
         <!-- <div class="col-md-4"> -->
-        {% for booking in bookings_list %}
-
+        {% for booking in mybooking_list %}
         <div class="col-md-6">
-
-
 
             {% if user.username == booking.creator %}
             <div class="card text-white border-secondary mx-auto mb-5 w-100" style='background-color:rgb(23, 38, 87); '>
-            {% endif %}
+            {% elif request.user.username in booking.members.name.all %}
             <div class="card text-white border-secondary mx-auto mb-5 w-100" style='background-color:rgb(23, 38, 87); '>
 
-              <div class="card-body" style='border: 1px solid rgb(23, 38, 87) '>
+            {% else %}
+            <div class="card text-white border-secondary mx-auto mb-5 w-100" style='background-color:rgb(145, 0, 61); '>
+            {% endif %}
+              <div class="card-body">
                 <div class="card-title text-center">
 
                 </div>
@@ -40,7 +36,7 @@ HomePage
                   <h6>Date : {{booking.date}}</h6>
                   <h6>Time : {{booking.time}}</h6>
                   <h6>Group-Admin : {{booking.creator}}</h6>
-                  <h6>No. of Members : {{booking.members.count|add:"1"}}<small style='text-muted'>   /{{booking.max_members}}</small></h6>
+                  <h6>No. of Members : {{booking.members.count|add:"1"}}<small style='text-muted'> /{{booking.max_members}}</small></h6>
                   <h6>Group open to: {{booking.gender}}</h6>
                   <br>
                   <div class="card-link">
@@ -62,42 +58,13 @@ HomePage
                 </div>
               </div>
             </div>
-            </div>
+          </div>
+        <!-- </div> -->
         {% endfor %}
       </div>
     </div>
   </div>
 
-
-</div>
-
-<div class="container-fluid" style='background-color:  rgb(28, 26, 27);'>
-  <div class="row">
-    <div class="col-md-3" style='border-right:1px solid rgb(62, 63, 64)'>
-      <h5  style='color:rgb(176, 172, 175);'>IIT Guwahati</h5>
-      <a href="http://www.iitg.ac.in/" style="color:rgb(227, 228, 230)">IIT Guwahati</a>
-      <br>
-    </div>
-    <div class="col-md-6" style="border-right:1px solid rgb(62, 63, 64)">
-      <h5 class='text-center' style='color:rgb(176, 172, 175); align:center;'>Contact Us</h5>
-      <div class="row">
-        <div class="col-6 "  style="color:rgb(227, 228, 230)">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nost deserunt mollit anim id est laborum.
-
-        </div>
-        <div class="col-6 " style="color:rgb(227, 228, 230)">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nost deserunt mollit anim id est laborum.
-
-        </div>
-      </div>
-    <br>
-    </div>
-    <div class="col-md-3" style='align:right;'>
-      <h5  style='color:rgb(176, 172, 175)'>Follow Us</h5>
-      <a href="https://www.iitg.ac.in/stud/gymkhana/technical/home/CodingHome.html"  style="color:rgb(227, 228, 230)">Coding Club</a><br>
-      <a href="https://www.facebook.com/codingclubiitg/"  style="color:rgb(227, 228, 230)">facebook</a>
-    </div>
-  </div>
 
 </div>
 
