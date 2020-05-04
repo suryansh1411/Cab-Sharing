@@ -27,7 +27,7 @@ class Booking(models.Model):
     def get_absolute_url(self):
         return redirect('index')
 
-
+    
     def approved_members(self):
         return self.bookings.filter(approved=True)
 
@@ -46,7 +46,7 @@ class Member(models.Model):
     approved=models.BooleanField(default=False)
 
 
-    
+
     def get_absolute_url(self):
         return reverse('index')
 

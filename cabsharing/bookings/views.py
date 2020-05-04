@@ -9,6 +9,7 @@ from accounts.models import UserProfile
 from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.http import Http404
+from django.contrib import messages
 # Create your views here.
 
 User=get_user_model()
@@ -54,7 +55,10 @@ class BookingUpdateView(LoginRequiredMixin, UpdateView):
 class BookingDeleteView(LoginRequiredMixin, DeleteView):
     model=Booking
     success_url=reverse_lazy('index')
-
+    success_message='Booking deleted'
+    def delete(self, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super().delete(*args,**kwargs)
 
 class BookingListView( ListView):
     model=Booking
@@ -62,6 +66,8 @@ class BookingListView( ListView):
     # def get_queryset(self):
     #     booking= Booking.objects.order_by('date')
     #     return booking.order_by('time')
+
+
 
 class GroupInfo(DetailView):
     model=Booking
