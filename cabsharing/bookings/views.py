@@ -12,7 +12,7 @@ from django.http import Http404
 from django.contrib import messages
 # Create your views here.
 
-User=get_user_model()
+# User=get_user_model()
 # class BookingCreateView(LoginRequiredMixin, CreateView):
 #     model=Booking
 #     form_class=BookingForm
@@ -20,8 +20,17 @@ User=get_user_model()
 #
 #     def form_valid(self, form):
 #         form.instance.creator = self.request.user
-#         return super(BookingCreateView, self).form_valid(form)
-
+#         return super().form_valid(form)
+#
+#     def save(self, *args, **kwargs):
+#         if (self.gender == 'boys only' and (self.hostel=='Subhansiri' or self.hostel=='Dhansiri')):
+#             messages.success(self.request, "A girl can't chose only boys option!")
+#             return redirect('bookings:bookings_create')
+#         elif (self.gender == 'girls only' and (not(self.hostel=='Subhansiri' or self.hostel=='Dhansiri'))):
+#             messages.success(self.request, "A boy can't chose only girls option!")
+#             return redirect('bookings:bookings_create')
+#         else:
+#             super().save(*args, **kwargs)
 @login_required
 def create_booking(request):
     if request.method=='POST':
@@ -31,11 +40,15 @@ def create_booking(request):
 
             if(booking.gender=='boys only'):
                 if(request.user.userprofile.hostel=='Subhansiri' or request.user.userprofile.hostel=='Dhansiri'):
-                    return redirect('index')
+                    # messages.add_message(request, "A girl can't chose only boys option")
+                    messages.success(request, "A girl can't chose <strong>only boys</strong> option")
+                    return redirect('bookings:bookings_create')
 
             if(booking.gender=='girls only'):
                 if(not(request.user.userprofile.hostel=='Subhansiri' or request.user.userprofile.hostel=='Dhansiri')):
-                    return redirect('index')
+                    # messages.add_message(request, "A girl can't chose only boys option")
+                    messages.success(request,  "A boy can't chose <strong>only girls</strong> option")
+                    return redirect('bookings:bookings_create')
 
             booking.user=request.user
             booking.creator=request.user.username
@@ -55,7 +68,7 @@ class BookingUpdateView(LoginRequiredMixin, UpdateView):
 class BookingDeleteView(LoginRequiredMixin, DeleteView):
     model=Booking
     success_url=reverse_lazy('index')
-    success_message='Booking deleted'
+    success_message='Booking has been deleted'
     def delete(self, *args, **kwargs):
         messages.success(self.request, self.success_message)
         return super().delete(*args,**kwargs)
@@ -85,13 +98,16 @@ def join_group(request, pk):
             persons=booking.members.all()
             for person in persons:
                 if(request.user.username == person.name):
+                    messages.success(request,  "You are already a member of this Booking ")
                     return redirect('index')
 
             if (request.user.username==booking.creator):
+                messages.success(request,  "You are already a member of this Booking ")
                 return redirect('index')
 
             if(booking.gender=='boys only'):
                 if(request.user.userprofile.hostel=='Subhansiri' or request.user.userprofile.hostel=='Dhansiri'):
+                    messages.success(request,  "Girls can't join <strong>boys only</strong> bookings")
                     return redirect('index')
 
             if(booking.gender=='girls only'):
@@ -101,8 +117,10 @@ def join_group(request, pk):
                     member.user=request.user
                     member.name=request.user.username
                     member.save()
+                    messages.success(request,  "<strong> Booking </strong> joined successfully!")
                     return redirect('index')
                 else:
+                    messages.success(request,  "Boys can't join <strong> girls only </strong> bookings")
                     return redirect('index')
 
 
@@ -111,6 +129,7 @@ def join_group(request, pk):
             member.user=request.user
             member.name=request.user.username
             member.save()
+            messages.success(request,  "<strong> Booking </strong> joined successfully!")
             return redirect('index')
 
 
@@ -131,6 +150,7 @@ def leave_group(request, pk):
                 member.delete()
                 return redirect('index')
             except Member.DoesNotExist:
+                messages.success(request,  "You are <strong> not</strong> a member of this Booking ")
                 return redirect('index')
     else:
         form=MemberForm(request.POST)

@@ -7,7 +7,11 @@ New Booking
 
 
 {% block content %}
-<br><br><br>
+<br>
+
+
+
+<br>
 <div class="container">
   <div class="card">
     <div class="card-header text-center">
@@ -17,6 +21,19 @@ New Booking
     </div>
     <div class="card-body">
       <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+        <div class="container">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ message|safe }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <br>
         <form method="post">
           {% csrf_token %}
           <!-- {% for field in form %}

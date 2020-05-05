@@ -13,8 +13,8 @@ HomePage
 {% if messages %}
 {% for message in messages %}
 <div class="container">
-  <div class="alert alert-danger alert-dismissible fade show" role="alert">
-  {{ message }}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+  {{ message|safe }}
   <button type="button" class="close" data-dismiss="alert" aria-label="Close">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -50,7 +50,7 @@ HomePage
                 <div class="card-text">
                   <h6>From : {{booking.start_position}}</h6>
                   <h6>To : {{booking.destination}}</h6>
-                  <h6>Date : {{booking.date}}</h6>
+                  <h6>Date : {{booking.date|date:'d-m-Y'}}</h6>
                   <h6>Time : {{booking.time}}</h6>
                   <h6>Group-Admin : {{booking.creator}}</h6>
                   <h6>No. of Members : {{booking.members.count|add:"1"}}<small style='text-muted'> /{{booking.max_members}}</small></h6>
