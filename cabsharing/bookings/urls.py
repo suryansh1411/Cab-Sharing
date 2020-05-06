@@ -14,5 +14,6 @@ urlpatterns=[
     re_path(r'^(?P<pk>\d+)/info/$', views.GroupInfo.as_view(template_name='bookings/bookings_detail.html'), name='group_info'),
     # re_path(r'^(?P<pk>\d+)/chats/$', views.MessageDisplayView.as_view(template_name='bookings/chats_list.html'), name='chats_display'),
     re_path(r'^(?P<pk>\d+)/chats/$', views.message_create, name='chats_display'),
+    path('mybookings/', views.my_bookings, name='my_bookings'),
     # re_path(r'^(?P<pk>\d+)/my_bookings/$', views.mybooking, name='mybooking'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

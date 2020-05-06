@@ -76,10 +76,22 @@ class BookingDeleteView(LoginRequiredMixin, DeleteView):
 class BookingListView( ListView):
     model=Booking
     context_object_name='bookings_list'
+
     # def get_queryset(self):
     #     booking= Booking.objects.order_by('date')
     #     return booking.order_by('time')
 
+
+def my_bookings(request):
+    context={}
+    hehehe=[]
+    context['mybooking']=Booking.objects.all().filter(creator__iexact=request.user.username)
+    for booking in Booking.objects.all():
+        for member in booking.members.all():
+            if request.user.username == member.name:
+                hehehe.append(booking)
+    context['memberbooking']=hehehe
+    return render(request, 'bookings/mybookings.html', context)
 
 
 class GroupInfo(DetailView):

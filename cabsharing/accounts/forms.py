@@ -10,7 +10,7 @@ HOSTELS=[
         ('Dhansiri', 'Dhansiri'),
         ('Kapili', 'Kapili'),
         ('Siang', 'Siang'),
-        ('Kameng', 'Siang'),
+        ('Kameng', 'Kameng'),
         ('Umiam', 'Umiam'),
         ('Barak', 'Barak'),
         ('Subhansiri', 'Subhansiri'),
@@ -37,7 +37,7 @@ class UserForm(forms.ModelForm):
 class UserProfileForm(forms.ModelForm):
 
     hostel=forms.ChoiceField(required=True, choices=HOSTELS)
-    
+
     class Meta():
         model=UserProfile
         fields=('hostel', 'profile_pic')

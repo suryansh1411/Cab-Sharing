@@ -11,7 +11,7 @@ HOSTELS=[
         ('Dhansiri', 'Dhansiri'),
         ('Kapili', 'Kapili'),
         ('Siang', 'Siang'),
-        ('Kameng', 'Siang'),
+        ('Kameng', 'Kameng'),
         ('Umiam', 'Umiam'),
         ('Barak', 'Barak'),
         ('Subhansiri', 'Subhansiri'),
