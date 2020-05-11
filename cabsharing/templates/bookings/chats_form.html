@@ -12,41 +12,44 @@ Message
 
 </nav>
 
-{% for chat in booking.chats.all %}
-{% if user.username == chat.name %}
-<div class="container position-relative:left">
-  <div class="alert alert-success alert-dismissible fade show" style='width:20em;  padding-left:0.5em;' role="alert">
-    <div class="media">
+<div style="position:absolute; left:40%; transform: translate(-50%);">
+
+  {% for chat in booking.chats.all %}
+  {% if user.username == chat.name %}
+  <div class="container"  style="position:relative; left:15rem;">
+    <div class="alert alert-success alert-dismissible fade show" style='width:20rem;  padding-left:0.5rem;' role="alert">
+      <div class="media">
 
 
-      <a href="{% url 'accounts:user_detail' pk=chat.user.pk %}"><img src="{{chat.photo.url}}" height="50em" width='50em' alt='no image' class='mr-3'></a>
-      <div class="media-body">
-        <h6><a href="{% url 'accounts:user_detail' pk=chat.user.pk %}">{{chat.name}}</a></h6>
-        {{chat.message}}
-        <footer><small>{{chat.time}}</small></footer>
+        <a href="{% url 'accounts:user_detail' pk=chat.user.pk %}"><img src="{{chat.photo.url}}" height="50em" width='50em' alt='no image' class='mr-3'></a>
+        <div class="media-body">
+          <h6><a href="{% url 'accounts:user_detail' pk=chat.user.pk %}">{{chat.name}}</a></h6>
+          {{chat.message}}
+          <footer><small>{{chat.time}}</small></footer>
 
 
+        </div>
       </div>
     </div>
   </div>
-</div>
-{% else %}
-<div class="container">
-  <div class="alert alert-primary alert-dismissible fade show" style='width:20em;  padding-left:0.5em; ' role="alert">
-    <div class="media">
-      <a href="{% url 'accounts:user_detail' pk=chat.user.pk %}"><img src="{{chat.photo.url}}" height="50em" width='50em' alt='no image' class='mr-3'></a>
+  {% else %}
+  <div class="container">
+    <div class="alert alert-primary alert-dismissible fade show" style='width:20rem;  padding-left:0.5rem; ' role="alert">
+      <div class="media">
+        <a href="{% url 'accounts:user_detail' pk=chat.user.pk %}"><img src="{{chat.photo.url}}" height="50em" width='50em' alt='no image' class='mr-3'></a>
 
-      <div class="media-body">
-        <h6><a href="{% url 'accounts:user_detail' pk=chat.user.pk %}">{{chat.name}}</a></h6>
-        {{chat.message}}
-        <footer><small>{{chat.time}}</small></footer>
+        <div class="media-body">
+          <h6><a href="{% url 'accounts:user_detail' pk=chat.user.pk %}">{{chat.name}}</a></h6>
+          {{chat.message}}
+          <footer><small>{{chat.time}}</small></footer>
+        </div>
       </div>
     </div>
   </div>
-</div>
-{% endif %}
-{% endfor %}
+  {% endif %}
+  {% endfor %}
 
+</div>
 <!--
 <br><br><br>
 <div class="container">

@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 GENDER=[
-    ('both boys and girls','both boys and girls'),
+    ('all','all'),
     ('girls only','girls only'),
     ('boys only', 'boys only')
 ]
@@ -27,7 +27,7 @@ class Booking(models.Model):
     def get_absolute_url(self):
         return redirect('index')
 
-    
+
     def approved_members(self):
         return self.bookings.filter(approved=True)
 

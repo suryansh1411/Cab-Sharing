@@ -33,19 +33,14 @@ Group Info
           {% if user.username == booking.creator %}
           <a href="{% url 'bookings:bookings_delete' pk=booking.pk %}" class='btn btn-secondary btn-lg '>Delete</a>
           {% endif %}
-
-          {% if user in booking.members.all %}
-          <a href="{% url 'bookings:group_leave' pk=booking.pk %}" class='btn btn-info btn-lg'>Leave</a>
-
+          {% if booking.members.count|add:"1" < booking.max_members %}
+          <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-lg">Join</a>
           {% else %}
-              {% if booking.members.count|add:"1" < booking.max_members %}
-              <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-lg">Join</a>
-              {% else %}
-              <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-lg disabled">Join</a>
-              {% endif %}
+          <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-lg disabled">Join</a>
           {% endif %}
-
-
+          <a href="{% url 'bookings:group_leave' pk=booking.pk %}" class='btn btn-info btn-lg'>Leave</a>
+          <a href="{% url 'bookings:group_info' pk=booking.pk %}" class='btn btn-primary btn-lg'>Info</a>
+          <a href="{% url 'bookings:chats_display' pk=booking.pk %}" class='btn btn-secondary btn-lg'>Chat</a>
 
         </div>
       </div>
@@ -68,6 +63,5 @@ Group Info
 
 
 </div>
-
 
 {% endblock %}

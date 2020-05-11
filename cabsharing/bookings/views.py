@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import CreateView , ListView, UpdateView , DeleteView, DetailView
 from bookings.models import Booking, Member, Chat
-from bookings.forms import BookingForm, MemberForm, MessageForm
+from bookings.forms import BookingForm, MemberForm, MessageForm, FilterForm
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -81,7 +81,7 @@ class BookingListView( ListView):
     #     booking= Booking.objects.order_by('date')
     #     return booking.order_by('time')
 
-
+@login_required
 def my_bookings(request):
     context={}
     hehehe=[]
@@ -160,6 +160,7 @@ def leave_group(request, pk):
             try:
                 member=booking.members.get(name=request.user.username)
                 member.delete()
+                messages.success(request,  "Booking left successfully! ")
                 return redirect('index')
             except Member.DoesNotExist:
                 messages.success(request,  "You are <strong> not</strong> a member of this Booking ")
@@ -191,3 +192,11 @@ def message_create(request, pk):
 
 
 # def mybookings(request,pk):
+###############################################################################################
+###############################################################################################
+
+@login_required
+def filter(request):
+    # if request.method=='POST':
+    form=FilterForm()
+    return render(request, 'bookings/bookings_list.html', {'form':form})
