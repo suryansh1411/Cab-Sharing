@@ -10,6 +10,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.http import Http404
 from django.contrib import messages
+import datetime
+# from datetime import timedelta
 # Create your views here.
 
 # User=get_user_model()
@@ -197,6 +199,28 @@ def message_create(request, pk):
 
 @login_required
 def filter(request):
-    # if request.method=='POST':
-    form=FilterForm()
-    return render(request, 'bookings/bookings_list.html', {'form':form})
+    if request.method=='POST':
+        form=FilterForm(request.POST)
+        if form.is_valid():
+
+            custom=Booking.objects.all()
+
+            if(not (form.cleaned_data['start_position']=='')):
+                custom=custom.filter(start_position__contains=form.cleaned_data['start_position'])
+            if(not (form.cleaned_data['destination']=='')):
+                custom=custom.filter(destination__contains=form.cleaned_data['destination'])
+            if((form.cleaned_data['date'])):
+                custom=custom.filter(date__iexact=form.cleaned_data['date'])
+            if(form.cleaned_data['time']):
+                time1=datetime.datetime.strptime(str(form.cleaned_data['time']), '%H:%M:%S')-datetime.timedelta(hours=1)
+                time2=datetime.datetime.strptime(str(form.cleaned_data['time']), '%H:%M:%S')+datetime.timedelta(hours=1)
+                custom=custom.filter(time__gte=time1)
+                custom=custom.filter(time__lte=time2)
+            custom=custom.filter(gender__iexact=form.cleaned_data['gender'])
+
+            context={}
+            context['custom']=custom
+            return render(request, 'bookings/filter_display.html', context)
+    else:
+        form=FilterForm()
+    return render(request, 'bookings/filter.html', {'form':form})
