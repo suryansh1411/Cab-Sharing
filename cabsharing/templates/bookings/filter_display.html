@@ -22,9 +22,9 @@
 {% endif %}
 
 <br><br>
-<div class="container">
+
   <div class="row">
-    <div class="col-md-3">
+    <div class="col-lg-3 col-md-4 ">
 
       <div class="container">
         <div class="card">
@@ -41,17 +41,24 @@
                 <p style="color: red">{{ error }}</p>
                 {% endfor %}
                 <div class="text-center">
-                  <button type="submit" class="btn btn-success btn-lg">Filter</button>
+                  <button type="submit" class="btn btn-success ">Filter</button>
+
                 </div>
 
+
               </form>
+              <hr>
+              <div class="text-center">
+                <a href="{% url 'index' %}" class='btn btn-danger '>Show all</a>
+                <a href="{% url 'bookings:bookings_create' %}" class='btn btn-primary'>Create</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
     </div>
-    <div class="col-md-9">
+    <div class="col-xl-9">
 
       <div class="container">
         <div class="row">
@@ -59,7 +66,7 @@
             <!-- <div class="col-md-4"> -->
             {% for booking in custom %}
 
-            <div class="col-md-6">
+            <div class="col-xl-6">
 
               <!-- {% if user.is_member %}
               sjfhskjhf
@@ -112,6 +119,50 @@
               {% endfor %}
 
   </div>
+</div>
+</div>
+</div>
+
+
+  {% if bookings_list.count == 0 %}
+<nav class="navbar  fixed-bottom navbar-expand-lg navbar-dark bg-dark">
+  {% endif %}
+
+
+
+    <div class="container-fluid" style='background-color:  rgb(28, 26, 27);'>
+      <div class="row">
+        <div class="col-md-3" style='border-right:1px solid rgb(62, 63, 64)'>
+          <h5 style='color:rgb(176, 172, 175);'>IIT Guwahati</h5>
+          <a href="http://www.iitg.ac.in/" style="color:rgb(227, 228, 230)">IIT Guwahati</a>
+          <br>
+        </div>
+        <div class="col-md-6" style="border-right:1px solid rgb(62, 63, 64)">
+          <h5 class='text-center' style='color:rgb(176, 172, 175); align:center;'>Contact Us</h5>
+          <div class="row">
+            <div class="col-6 " style="color:rgb(227, 228, 230)">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim</p>
+            </div>
+            <div class="col-6 " style="color:rgb(227, 228, 230)">
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim</p>
+
+            </div>
+          </div>
+          <br>
+        </div>
+        <div class="col-md-3" style='align:right;'>
+          <h5 style='color:rgb(176, 172, 175)'>Follow Us</h5>
+          <a href="https://www.iitg.ac.in/stud/gymkhana/technical/home/CodingHome.html" style="color:rgb(227, 228, 230)">Coding Club</a><br>
+          <a href="https://www.facebook.com/codingclubiitg/" style="color:rgb(227, 228, 230)">facebook</a>
+        </div>
+      </div>
+
+    </div>
+
+    {% if bookings_list.count == 0 %}
+  </nav>
+    {% endif %}
+
 
 </div>
 {% endblock %}

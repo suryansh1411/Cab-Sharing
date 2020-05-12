@@ -197,7 +197,7 @@ def message_create(request, pk):
 ###############################################################################################
 ###############################################################################################
 
-@login_required
+
 def filter(request):
     if request.method=='POST':
         form=FilterForm(request.POST)
@@ -226,4 +226,7 @@ def filter(request):
             return render(request, 'bookings/filter_display.html', context)
     else:
         new_form=FilterForm()
-    return render(request, 'bookings/filter_display.html', {'form':new_form})
+        context={}
+        context['form']=new_form
+        context['custom']=Booking.objects.all()
+    return render(request, 'bookings/filter_display.html', context)

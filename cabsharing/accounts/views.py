@@ -54,9 +54,10 @@ class UserDetailView(LoginRequiredMixin, DetailView):
 
 
 class UserUpdateView(LoginRequiredMixin, UpdateView):
-    model=User
-    fields=['username','email']
-    success_url=reverse_lazy('index')
+    model=UserProfile
+    fields=['profile_pic']
+    template_name='accounts/haha.html'
+    # success_url=reverse_lazy('index')
     # need to change it to detail
     # extra_context={'userprofile': UserProfileForm()}
 

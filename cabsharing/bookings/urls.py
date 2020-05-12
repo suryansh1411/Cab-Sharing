@@ -16,5 +16,5 @@ urlpatterns=[
     re_path(r'^(?P<pk>\d+)/chats/$', views.message_create, name='chats_display'),
     path('mybookings/', views.my_bookings, name='my_bookings'),
     # re_path(r'^(?P<pk>\d+)/my_bookings/$', views.mybooking, name='mybooking'),
-    path('filter/', views.filter, name='filter'),
+    
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
