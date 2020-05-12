@@ -220,7 +220,10 @@ def filter(request):
 
             context={}
             context['custom']=custom
+
+            new_form=FilterForm()
+            context['form']=new_form
             return render(request, 'bookings/filter_display.html', context)
     else:
-        form=FilterForm()
-    return render(request, 'bookings/filter.html', {'form':form})
+        new_form=FilterForm()
+    return render(request, 'bookings/filter_display.html', {'form':new_form})
