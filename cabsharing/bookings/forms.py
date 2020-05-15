@@ -1,5 +1,5 @@
 from django import forms
-from bookings.models import Booking, Member, Chat
+from bookings.models import Booking, Member, Chat, Feedback
 
 GENDER=[
     ('all','all'),
@@ -44,3 +44,10 @@ class FilterForm(forms.Form):
     date=forms.DateField(label='Date:' ,required=False ,widget=forms.DateInput(attrs={'placeholder':'yyyy-mm-dd'}),)
     time=forms.TimeField(label='Time:',required=False, widget=forms.TimeInput(attrs={'placeholder':'00:00'}), help_text='24-hours format')
     gender=forms.ChoiceField(label='Group open to:', choices=GENDER ,required=False)
+
+
+class FeedbackForm(forms.ModelForm):
+    feedback=forms.CharField(widget=forms.Textarea)
+    class Meta():
+        model=Feedback
+        fields=['feedback']

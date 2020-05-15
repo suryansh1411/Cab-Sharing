@@ -76,7 +76,7 @@ HomePage
                     {% endif %}
                     <a href="{% url 'bookings:group_leave' pk=booking.pk %}" class='btn btn-info btn-sm'>Leave</a>
                     <a href="{% url 'bookings:group_info' pk=booking.pk %}" class='btn btn-primary btn-sm'>Info</a>
-                    <a href="{% url 'bookings:chats_display' pk=booking.pk %}" class='btn btn-secondary btn-sm'>Chat</a>
+                    <a href="{% url 'bookings:chats_display' pk=booking.pk %}" class='btn btn-sm' style='color:rgb(0, 121, 107);'>Chat</a>
                   </div>
                 </div>
               </div>

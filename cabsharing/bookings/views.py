@@ -1,7 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import CreateView , ListView, UpdateView , DeleteView, DetailView
-from bookings.models import Booking, Member, Chat
-from bookings.forms import BookingForm, MemberForm, MessageForm, FilterForm
+from bookings.models import Booking, Member, Chat, Feedback
+from bookings.forms import BookingForm, MemberForm, MessageForm, FilterForm, FeedbackForm
 from django.urls import reverse, reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -11,6 +11,7 @@ from django.contrib.auth import get_user_model
 from django.http import Http404
 from django.contrib import messages
 import datetime
+from django.utils import timezone
 # from datetime import timedelta
 # Create your views here.
 
@@ -52,9 +53,14 @@ def create_booking(request):
                     messages.success(request,  "A boy can't chose <strong>only girls</strong> option")
                     return redirect('bookings:bookings_create')
 
+            if(booking.date <datetime.date.today()):
+                messages.success(request,  "You can't create a booking with a date which has already passed.")
+                return redirect('bookings:bookings_create')
+
             booking.user=request.user
             booking.creator=request.user.username
             booking.save()
+            messages.success(request,  "Booking created successfully ")
             return redirect('index')
     else:
         form=BookingForm()
@@ -65,7 +71,17 @@ class BookingUpdateView(LoginRequiredMixin, UpdateView):
     model=Booking
     form_class=BookingForm
     success_url=reverse_lazy('index')
-
+    #
+    # def save(self, *args, **kwargs):
+    #     if (self.gender == 'boys only' and (self.hostel=='Subhansiri' or self.hostel=='Dhansiri')):
+    #         messages.success(self.request, "A girl can't chose only boys option!")
+    #         return redirect('bookings:bookings_update', pk=self.kwargs['pk'])
+    #     elif (self.gender == 'girls only' and (not(request.user.userprofile.hostel=='Subhansiri' or request.user.userprofile.hostel=='Dhansiri'))):
+    #         print('hehehe')
+    #         messages.success(self.request, "A boy can't chose only girls option!")
+    #         return redirect('bookings:bookings_update', pk=self.kwargs['pk'])
+    #     else:
+    #         super().save(*args, **kwargs)
 
 class BookingDeleteView(LoginRequiredMixin, DeleteView):
     model=Booking
@@ -75,9 +91,9 @@ class BookingDeleteView(LoginRequiredMixin, DeleteView):
         messages.success(self.request, self.success_message)
         return super().delete(*args,**kwargs)
 
-class BookingListView( ListView):
-    model=Booking
-    context_object_name='bookings_list'
+# class BookingListView( ListView):
+#     model=Booking
+#     context_object_name='bookings_list'
 
     # def get_queryset(self):
     #     booking= Booking.objects.order_by('date')
@@ -87,7 +103,7 @@ class BookingListView( ListView):
 def my_bookings(request):
     context={}
     hehehe=[]
-    context['mybooking']=Booking.objects.all().filter(creator__iexact=request.user.username)
+    context['mybooking']=Booking.objects.all().filter(creator__iexact=request.user.username).reverse()
     for booking in Booking.objects.all():
         for member in booking.members.all():
             if request.user.username == member.name:
@@ -203,24 +219,29 @@ def filter(request):
         form=FilterForm(request.POST)
         if form.is_valid():
 
-            custom=Booking.objects.all()
-
+            custom=Booking.objects.filter(date__gte=datetime.date.today())
+            hehehe=[]
             if(not (form.cleaned_data['start_position']=='')):
                 custom=custom.filter(start_position__contains=form.cleaned_data['start_position'])
+                hehehe.append("From:"+form.cleaned_data['start_position'])
             if(not (form.cleaned_data['destination']=='')):
                 custom=custom.filter(destination__contains=form.cleaned_data['destination'])
+                hehehe.append("To:"+form.cleaned_data['destination'])
             if((form.cleaned_data['date'])):
                 custom=custom.filter(date__iexact=form.cleaned_data['date'])
+
+                hehehe.append("Date:"+form.cleaned_data['date'].strftime('%d-%m-%y'))
             if(form.cleaned_data['time']):
                 time1=datetime.datetime.strptime(str(form.cleaned_data['time']), '%H:%M:%S')-datetime.timedelta(hours=1)
                 time2=datetime.datetime.strptime(str(form.cleaned_data['time']), '%H:%M:%S')+datetime.timedelta(hours=1)
                 custom=custom.filter(time__gte=time1)
                 custom=custom.filter(time__lte=time2)
+                hehehe.append("Time:"+form.cleaned_data['time'].strftime('%H:%M'))
             custom=custom.filter(gender__iexact=form.cleaned_data['gender'])
-
+            hehehe.append("Gender:"+str(form.cleaned_data['gender']))
             context={}
             context['custom']=custom
-
+            context['hehehe']=hehehe
             new_form=FilterForm()
             context['form']=new_form
             return render(request, 'bookings/filter_display.html', context)
@@ -228,5 +249,18 @@ def filter(request):
         new_form=FilterForm()
         context={}
         context['form']=new_form
-        context['custom']=Booking.objects.all()
+        context['custom']=Booking.objects.filter(date__gte=datetime.date.today())
     return render(request, 'bookings/filter_display.html', context)
+
+
+def feedback(request):
+    if request.method=='POST':
+        form=FeedbackForm(request.POST)
+        if form.is_valid():
+            feedback=form.save(commit=False)
+            feedback.user=request.user
+            feedback.save()
+            return redirect('index')
+    else:
+        form=FeedbackForm()
+        return render(request, 'accounts/feedback.html', {'form':form})

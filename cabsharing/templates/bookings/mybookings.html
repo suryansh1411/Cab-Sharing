@@ -33,6 +33,11 @@ My Bookings
     <div class="row">
       <div class="card-group ">
         <!-- <div class="col-md-4"> -->
+        {% if mybooking.count == 0 %}
+          {% if memberbooking.count == 0 %}
+          <h1 class='mt-5' style="text-align:center; color:#00796b;" id='no_booking'>No Bookings</h1>
+          {% endif %}
+        {% endif %}
         {% for booking in mybooking %}
 
         <div class="col-md-6">
@@ -67,18 +72,18 @@ My Bookings
                   <div class="card-link">
                     {% if user.username == booking.creator %}
                     <a href="{% url 'bookings:bookings_update' pk=booking.pk %}" class='btn btn-warning btn-sm '>Edit</a>
-                    {% endif %}
-                    {% if user.username == booking.creator %}
-                    <a href="{% url 'bookings:bookings_delete' pk=booking.pk %}" class='btn btn-secondary btn-sm '>Delete</a>
-                    {% endif %}
-                    {% if booking.members.count|add:"1" < booking.max_members %}
-                    <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-sm">Join</a>
+                    <a href="{% url 'bookings:bookings_delete' pk=booking.pk %}" class='btn btn-danger btn-sm '>Delete</a>
                     {% else %}
-                    <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-sm disabled">Join</a>
+                              {% if booking.members.count|add:"1" < booking.max_members %}
+                              <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-sm">Join</a>
+                              {% else %}
+                              <a href="{% url 'bookings:group_join' pk=booking.pk %}" class="btn btn-success btn-sm disabled">Join</a>
+                              {% endif %}
+                              <a href="{% url 'bookings:group_leave' pk=booking.pk %}" class='btn btn-info btn-sm'>Leave</a>
                     {% endif %}
-                    <a href="{% url 'bookings:group_leave' pk=booking.pk %}" class='btn btn-info btn-sm'>Leave</a>
-                    <a href="{% url 'bookings:group_info' pk=booking.pk %}" class='btn btn-primary btn-sm'>Info</a>
-                    <a href="{% url 'bookings:chats_display' pk=booking.pk %}" class='btn btn-secondary btn-sm'>Chat</a>
+
+                    <a href="{% url 'bookings:group_info' pk=booking.pk %}" class='btn btn-secondary btn-sm'>Info</a>
+                    <a href="{% url 'bookings:chats_display' pk=booking.pk %}" class='btn btn-primary btn-sm'>Chat</a>
                   </div>
                 </div>
               </div>

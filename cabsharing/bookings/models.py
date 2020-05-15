@@ -1,3 +1,4 @@
+
 from django.db import models
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -43,9 +44,7 @@ class Member(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE, related_name='member_users', null=True)
     booking=models.ForeignKey('Booking', on_delete=models.CASCADE , related_name='members')
     name=models.CharField(max_length=90)
-    approved=models.BooleanField(default=False)
-
-
+    
 
     def get_absolute_url(self):
         return reverse('index')
@@ -62,3 +61,8 @@ class Chat(models.Model):
 
     def get_absolute_url(self):
         return redirect('booking:chats_display', kwargs={'pk':self.booking.pk})
+
+
+class Feedback(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE, related_name='feedbackers', null=True)
+    feedback=models.CharField(max_length=500)
