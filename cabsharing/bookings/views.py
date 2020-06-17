@@ -71,6 +71,51 @@ class BookingUpdateView(LoginRequiredMixin, UpdateView):
     model=Booking
     form_class=BookingForm
     success_url=reverse_lazy('index')
+
+
+def update_booking(request, pk):
+    if request.method=='POST':
+        form=BookingForm(request.POST)
+        if form.is_valid():
+            form=form.save(commit=False)
+
+            if(form.gender=='boys only'):
+                if(request.user.userprofile.hostel=='Subhansiri' or request.user.userprofile.hostel=='Dhansiri'):
+                    # messages.add_message(request, "A girl can't chose only boys option")
+                    messages.success(request, "A girl can't chose <strong>only boys</strong> option")
+                    return redirect('bookings:bookings_update' ,pk=pk)
+
+            if(form.gender=='girls only'):
+                if(not(request.user.userprofile.hostel=='Subhansiri' or request.user.userprofile.hostel=='Dhansiri')):
+                    # messages.add_message(request, "A girl can't chose only boys option")
+                    messages.success(request,  "A boy can't chose <strong>only girls</strong> option")
+                    return redirect('bookings:bookings_update' ,pk=pk)
+
+            if(form.date <datetime.date.today()):
+                messages.success(request,  "You can't update a booking with a date which has already passed.")
+                return redirect('bookings:bookings_update' ,pk=pk)
+
+            # booking=get_object_or_404(Booking, pk=pk)     //this created a new booking.
+            booking=Booking.objects.get(pk=pk)
+            booking.start_position=form.start_position
+            booking.destination=form.destination
+            booking.date=form.date
+            booking.time=form.time
+            booking.max_members=form.max_members
+            booking.gender=form.gender
+            booking.description=form.description
+            booking.save()
+            messages.success(request,  "Booking updated successfully ")
+            return redirect('index')
+    else:
+        context={}
+        obj=get_object_or_404(Booking, pk=pk)
+        form=BookingForm( instance=obj)
+
+
+
+        context['form']=form
+        return render (request, "bookings/bookings_update.html", context)
     #
     # def save(self, *args, **kwargs):
     #     if (self.gender == 'boys only' and (self.hostel=='Subhansiri' or self.hostel=='Dhansiri')):
@@ -237,7 +282,8 @@ def filter(request):
                 custom=custom.filter(time__gte=time1)
                 custom=custom.filter(time__lte=time2)
                 hehehe.append("Time:"+form.cleaned_data['time'].strftime('%H:%M'))
-            custom=custom.filter(gender__iexact=form.cleaned_data['gender'])
+            if(form.cleaned_data['gender'] != '-'):
+                custom=custom.filter(gender__iexact=form.cleaned_data['gender'])
             hehehe.append("Gender:"+str(form.cleaned_data['gender']))
             context={}
             context['custom']=custom

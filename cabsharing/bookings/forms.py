@@ -2,6 +2,7 @@ from django import forms
 from bookings.models import Booking, Member, Chat, Feedback
 
 GENDER=[
+    ('-','-'),
     ('all','all'),
     ('girls only','girls only'),
     ('boys only', 'boys only')
