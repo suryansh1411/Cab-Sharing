@@ -64,7 +64,7 @@ This page contains all the information regarding a travel. It displays the creat
 
 This page allows the user to interact with the creator and members of the group. They can enquire, discuss and negotiate about a travel here. 
 
-![Demo](images\Chatpage.png)
+![Demo](https://github.com/Geek-Wolf/Cab-Sharing/blob/master/images/Chatpage.png)
 
 
 
