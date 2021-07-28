@@ -18,7 +18,7 @@ HOSTELS=[
         ('Disang/Dibang', 'Disang/Dibang'),
 ]
 
-
+   
 class UserProfile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
     hostel=models.CharField(blank=False, max_length=50 ,choices=HOSTELS)

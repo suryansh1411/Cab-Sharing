@@ -20,3 +20,4 @@ urlpatterns=[
     # re_path(r'^(?P<pk>\d+)/my_bookings/$', views.mybooking, name='mybooking'),
     path('feedback/', views.feedback, name='feedback'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+ 

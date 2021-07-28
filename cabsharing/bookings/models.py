@@ -13,7 +13,7 @@ GENDER=[
     ('boys only', 'boys only')
 ]
 
-
+ 
 class Booking(models.Model):
     user=models.ForeignKey(User, on_delete=models.CASCADE, related_name='users', null=True)
     creator=models.CharField(max_length=30, blank=False)

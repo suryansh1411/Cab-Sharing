@@ -9,7 +9,7 @@ GENDER=[
 ]
 
 
-
+ 
 class BookingForm(forms.ModelForm):
     start_position=forms.CharField(label='From:', required=True)
     destination=forms.CharField(label='To:', required=True)

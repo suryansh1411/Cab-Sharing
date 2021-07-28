@@ -14,7 +14,7 @@ import datetime
 from django.utils import timezone
 # from datetime import timedelta
 # Create your views here.
-
+ 
 # User=get_user_model()
 # class BookingCreateView(LoginRequiredMixin, CreateView):
 #     model=Booking
@@ -263,7 +263,6 @@ def filter(request):
     if request.method=='POST':
         form=FilterForm(request.POST)
         if form.is_valid():
-
             custom=Booking.objects.filter(date__gte=datetime.date.today())
             hehehe=[]
             if(not (form.cleaned_data['start_position']=='')):

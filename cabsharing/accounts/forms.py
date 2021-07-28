@@ -17,7 +17,7 @@ HOSTELS=[
         ('Disang/Dibang', 'Disang/Dibang'),
 ]
 
-
+ 
 def emailcheck(value):
     if(value[-11::]!='@iitg.ac.in'):
         raise forms.ValidationError("You must use email-id provided by IIT-Guwahati.")
