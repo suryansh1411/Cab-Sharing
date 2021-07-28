@@ -12,7 +12,7 @@ If a user is not registered, he can sign-up using his/her iitg email-id and givi
 
 This information is then stored in the database.
 
-![Demo](images\SignUp.png)
+![Demo](https://github.com/Geek-Wolf/Cab-Sharing/blob/master/images/SignUp.png)
 
 
 
@@ -21,7 +21,7 @@ This information is then stored in the database.
 
 The information entered is validated with data in the database, if it is correct the user is directed to landing page. Otherwise an alert dialogue message is shown.
 
-![Demo](images\Login.png)
+![Demo](https://github.com/Geek-Wolf/Cab-Sharing/blob/master/images/Login.png)
 
 
 
@@ -31,7 +31,7 @@ This Page shows the groups which will be travelling in future, the informations 
 
 There is a filter panel on the left, using which the users can filter the groups according to destination, date, time, and gender preferences as well. 
 
-![Demo](images\Home.png)
+![Demo](https://github.com/Geek-Wolf/Cab-Sharing/blob/master/images/Home.png)
 
 
 
@@ -39,7 +39,7 @@ There is a filter panel on the left, using which the users can filter the groups
 
 This page lists all the future and past travels in which the user has participated. List is ordered from being latest to oldest.
 
-![Demo](images\MyBooking.png)
+![Demo](https://github.com/Geek-Wolf/Cab-Sharing/blob/master/images/MyBooking.png)
 
 
 
@@ -48,7 +48,7 @@ This page lists all the future and past travels in which the user has participat
 
 This page contains a form, by giving informations like destination, date, time, maximum number of members and gender preference if any, a user can create a group. 
 
-![Demo](images\NewBooking.png)
+![Demo](https://github.com/Geek-Wolf/Cab-Sharing/blob/master/images/NewBooking.png)
 
 
 
@@ -56,7 +56,7 @@ This page contains a form, by giving informations like destination, date, time, 
 
 This page contains all the information regarding a travel. It displays the creator name, members' name, destination, date, time, starting position, gender preference of a travel.
 
-![Demo](images\GroupDescription.png) 
+![Demo](https://github.com/Geek-Wolf/Cab-Sharing/blob/master/images/GroupDescription.png) 
 
 
 
@@ -72,7 +72,7 @@ This page allows the user to interact with the creator and members of the group.
 
 This page displays the information about the person and if a user is viewing his own page, then he can update his information and profile picture.
 
-![Demo](images\Profilepage.png)
+![Demo](https://github.com/Geek-Wolf/Cab-Sharing/blob/master/images/Profilepage.png)
 
 
 
@@ -80,7 +80,7 @@ This page displays the information about the person and if a user is viewing his
 
 This page contains a form using which a user can give his/her suggestions, complains to the creator of the website.
 
-![Demo](images\Feedback.png)
+![Demo](https://github.com/Geek-Wolf/Cab-Sharing/blob/master/images/Feedback.png)
 
 
 
